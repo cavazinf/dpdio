@@ -1,0 +1,20 @@
+trigger:
+- master  # Defina a ramificação que acionará o pipeline
+
+pool:
+  vmImage: 'ubuntu-latest'  # Escolha a imagem do agente apropriada
+
+steps:
+- script: npm install  # Instale as dependências do Node.js
+  displayName: 'Instalar Dependências'
+
+- script: npm test  # Execute testes automatizados
+  displayName: 'Executar Testes'
+
+- script: npm run build  # Realize a compilação ou construção do aplicativo
+  displayName: 'Compilar Aplicativo'
+
+- task: PublishBuildArtifacts@1  # Publicar artefatos de construção
+  inputs:
+    pathtoPublish: 'dist'  # Especifique o diretório de saída da compilação
+    artifactName: 'drop'
