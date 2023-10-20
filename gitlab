@@ -1,0 +1,23 @@
+# Defina a imagem base para as execuções
+image: python:3.8
+
+# Defina as etapas do pipeline
+stages:
+  - test
+
+# Defina variáveis de ambiente, se necessário
+variables:
+  POSTGRES_DB: mydb
+  POSTGRES_USER: myuser
+  POSTGRES_PASSWORD: mypassword
+
+# Etapa de teste
+test:
+  stage: test
+  script:
+    - pip install -r requirements.txt
+    - python manage.py test  # Substitua por seu comando de teste
+  only:
+    - branches  # Execute apenas nas ramificações de código
+  tags:
+    - docker  # Execute em trabalhadores com a tag "docker"
